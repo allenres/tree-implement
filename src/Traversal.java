@@ -1,31 +1,57 @@
 public class Traversal {
   public static void main(String[] args) {
-    TreeNode root = new TreeNode(10, null, null);
-    root.left = new TreeNode(9, null, null);
-    root.left.left = new TreeNode(5, null, null);
-    root.left.right = new TreeNode(2, null, null);
+    TreeNode<Integer> root = new TreeNode<Integer>(10, null, null);
+    root.left = new TreeNode<Integer>(9, null, null);
+    root.left.left = new TreeNode<Integer>(5, null, null);
+    root.left.right = new TreeNode<Integer>(2, null, null);
 
-    root.right = new TreeNode(15, null, null);
-    root.right.left = new TreeNode(-3, null, null);
-    root.right.right = new TreeNode(5, null, null);
-    root.right.right.right = new TreeNode(22, null, null);
+    root.right = new TreeNode<Integer>(15, null, null);
+    root.right.left = new TreeNode<Integer>(-3, null, null);
+    root.right.right = new TreeNode<Integer>(5, null, null);
+    root.right.right.right = new TreeNode<Integer>(22, null, null);
+
+    TreeNode<String> stringRoot = new TreeNode<String>("hello", null, null);
+    stringRoot.left = new TreeNode<String>("How", null, null);
+    stringRoot.left.left = new TreeNode<String>("are", null, null);
+    stringRoot.left.right = new TreeNode<String>("you", null, null);
+
+    stringRoot.right = new TreeNode<String>("I", null, null);
+    stringRoot.right.left = new TreeNode<String>("am", null, null);
+    stringRoot.right.right = new TreeNode<String>("so", null, null);
+    stringRoot.right.right.right = new TreeNode<String>("good", null, null);
 
     // preOrder(root);
     System.out.println();
     // postOrder(root);
-    inOrder(root);
+    //printGrader(root, 100);
+    System.out.println(countNodes(stringRoot));
+  }
+
+  public static int countNodes(TreeNode<?> node) {
+    return node == null ? 0 : 1 + countNodes(node.left) + countNodes(node.right);
+  }
+
+  public static void printGrader(TreeNode<Integer> node, int threshold) {
+    if (node == null) return;
+    if(node.value > threshold) {
+      System.out.println(node.value);
+    }
+    printGrader(node.left, threshold);
+    printGrader(node.right, threshold);
   }
 
   // Print tree rooted at the given node in pre-order.
-  public static void preOrder(TreeNode node) {
+  // ? if you dont need to reuse it, parameterize
+  public static void preOrder(TreeNode<?> node) {
     if (node == null)
-      return;
+      return; 
     System.out.println(node.value);
     preOrder(node.left);
     preOrder(node.right);
   }
 
-  public static void postOrder(TreeNode node) {
+  // type variable if you need to reuse it
+  public static <T> void postOrder(TreeNode<T> node) {
     if (node == null)
       return;
     postOrder(node.left);
@@ -33,7 +59,7 @@ public class Traversal {
     System.out.println(node.value);
   }
 
-  public static void inOrder(TreeNode node) {
+  public static <E> void inOrder(TreeNode<E> node) {
     if (node == null)
       return;
     inOrder(node.left);
